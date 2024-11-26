@@ -5,6 +5,7 @@ import { addOneToCart } from "../features/cart";
 export default function ProductsList() {
   const products = useSelector((state) => state.products);
   const dispatch = useDispatch();
+  const baseUrl = import.meta.env.BASE_URL;
 
   if (!products.items) {
     dispatch(getProductsList());
@@ -19,7 +20,11 @@ export default function ProductsList() {
             <li key={product.id} className="p-4 bg-slate-200 rounded">
               <img
                 className="mb-4"
-                src={`/images/${product.img}.png`}
+                src={
+                  window.location.host.includes(baseUrl)
+                    ? `/images/${product.img}.png`
+                    : `${baseUrl}/images/${product.img}.png`
+                }
                 alt={product.title}
               />
               <div className="flex justify-between items-center mb-6">

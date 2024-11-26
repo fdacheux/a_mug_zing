@@ -4,6 +4,7 @@ import { updateItemFromSelect, deleteFromCart } from "../features/cart";
 export default function Cart({ onClose }) {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const baseUrl = import.meta.env.BASE_URL;
 
   return (
     <div
@@ -26,7 +27,11 @@ export default function Cart({ onClose }) {
               <li key={item.id} className="flex items-center mb-4">
                 <img
                   className="w-16 h-16 rounded"
-                  src={`/images/${item.img}.png`}
+                  src={
+                    window.location.host.includes(baseUrl)
+                      ? `/images/${item.img}.png`
+                      : `${baseUrl}/images/${item.img}.png`
+                  }
                   alt={item.title}
                 />
                 <p className="mr-auto ml-2 text-lg font-semibold">
@@ -52,7 +57,10 @@ export default function Cart({ onClose }) {
                   <option value="5">5</option>
                   <option value="6">6</option>
                 </select>
-                <button onClick={() => dispatch(deleteFromCart(item.id))} className="bg-slate-900 text-slate-200 px-2 inline-flex items-center justify-center rounded p-2">
+                <button
+                  onClick={() => dispatch(deleteFromCart(item.id))}
+                  className="bg-slate-900 text-slate-200 px-2 inline-flex items-center justify-center rounded p-2"
+                >
                   Remove 🗑
                 </button>
               </li>

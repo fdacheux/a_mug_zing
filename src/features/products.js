@@ -28,7 +28,12 @@ export const products = createSlice({
 
 export function getProductsList() {
   return async function (dispatch, getState) {
-    const response = await fetch("public/data/inventory.json");
+    const baseUrl = import.meta.env.BASE_URL;
+    const response = await fetch(
+      window.location.host.includes(baseUrl)
+        ? "/data/inventory.json"
+        : `${baseUrl}/data/inventory.json`
+    );
     const data = await response.json();
     dispatch(addProducts(data.products));
   };
