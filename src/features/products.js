@@ -28,7 +28,7 @@ export const products = createSlice({
 
 export function getProductsList() {
   return async function (dispatch, getState) {
-    const response = await fetch("/data/inventory.json");
+    const response = await fetch("public/data/inventory.json");
     const data = await response.json();
     dispatch(addProducts(data.products));
   };
